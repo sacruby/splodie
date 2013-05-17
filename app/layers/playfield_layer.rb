@@ -9,11 +9,9 @@ class PlayfieldLayer < Joybox::Core::Layer
     background = Sprite.new file_name: "spritesheets/match3bg.png", position: [Screen.half_width, Screen.half_height]
     self << background
 
-    CCSpriteFrameCache.sharedSpriteFrameCache.addSpriteFramesWithFile "match3sheet.plist"
-    @matchSheet = CCSpriteBatchNode.batchNodeWithFile "match3sheet.png", capacity:54
-    self << @matchSheet    # z:1
-
-    NSLog("%@", @matchSheet)
+    CCSpriteFrameCache.sharedSpriteFrameCache.addSpriteFramesWithFile("spritesheets/match3sheet.plist")
+    @matchSheet = CCSpriteBatchNode.batchNodeWithFile("spritesheets/match3sheet.png", capacity:54)
+    addChild(@matchSheet, z:1)
 
     @back_button = Sprite.new file_name: "source_images/backbutton.png", position: [10, 10]
     @back_button.anchorPoint = [0, 0]
@@ -21,7 +19,7 @@ class PlayfieldLayer < Joybox::Core::Layer
     self << @back_button
 
     # Initialize the sizing of the board
-    @boardRows = 6
+    @boardRows = 5
     @boardColumns = 7
     @boardOffsetWidth = 70
     @boardOffsetHeight = 0
@@ -134,7 +132,11 @@ class PlayfieldLayer < Joybox::Core::Layer
   def generatePlayfield
     # Randomly select gems and place on the board
     # Iterate through all rows and columns
-    (1..@boardRows).each {|row| (1..@boardColumns).each {|col| generateGemForRowandColumnofType(row, col, MagemSprite::KGEMANYTYPE) }}
+    (1..@boardRows).each do |row| 
+      (1..@boardColumns).each do |col|
+        generateGemForRowandColumnofType(row, col, MagemSprite::KGEMANYTYPE) 
+      end
+    end
     
     # We check for matches now, and remove any gems 
     # from starting in the scoring position
@@ -184,7 +186,7 @@ class PlayfieldLayer < Joybox::Core::Layer
     end
 
     # Generate the sprite name
-    spritename = "source_images/gem#{gemNum}.png"
+    spritename = "gem#{gemNum}.png"
 
     # Build the MAGem, which is just an enhanced CCSprite
     thisGem = MagemSprite.spriteWithSpriteFrameName(spritename)
@@ -198,7 +200,7 @@ class PlayfieldLayer < Joybox::Core::Layer
     
     # Set the position for this gem
     thisGem.position = positionForRowandColumn(rowNum, colNum)
-    
+
     # Add the gem to the array
     @gemsInPlay << thisGem
     
@@ -574,9 +576,6 @@ class PlayfieldLayer < Joybox::Core::Layer
     
     map5 = "#{map[5][1]} #{map[5][2]} #{map[5][3]} #{map[5][4]} #{map[5][5]} #{map[5][6]} #{map[5][7]}"
     
-    map6 = "#{map[6][1]} #{map[6][2]} #{map[6][3]} #{map[6][4]} #{map[6][5]} #{map[6][6]} #{map[6][7]}"
-    
-    NSLog(map6)
     NSLog(map5)
     NSLog(map4)
     NSLog(map3)
