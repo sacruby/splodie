@@ -21,6 +21,49 @@ class PlayfieldLayer < Joybox::Core::Layer
     # Tear down
   end
 
+  # pragma mark Timer & Game Over
+
+  def generateTimerDisplay
+    @timerFrame = CCSprite:spriteWithFile('timer.png')
+    @timerFrame.setPosition(@timerPosition)
+
+    # Create a sprite for the timer
+    @timerSprite = CCSprite:spriteWithFile('timer_back.png')
+
+    # Add the timer itself
+    @timerDisplay = CCProgressTimer:progressWithSprite(@timerSprite)
+    @timerDisplay.setPosition(@timerPosition)
+    @timerDisplay.setType(KCCProgressTimerTypeRadial)
+    addChildz(@timerDisplay, 4) # questionable: [self addChild:timerDisplay z:4]
+    @timerDisplay.setPercentage(100)
+
+    nil
+  end
+
+  def addTimeToTimer
+    # Add 1 second to clock
+    @currentTimerValue += 1
+
+    # If we are full, take it back to maximum
+    if @currentTimerValue > @startingTimeValue
+      @currentTimerValue = @startingTimeValue
+
+    nil
+  end
+
+  def gameOver
+    # Add a basic Game Over text
+    @gameOverLabel = CCLabelTTF:labelWithString:fontName:fontSize('Game Over', 'Marker Felt', 60)
+    @gameOverLabel.setPosition([size.width/2 - 4, size.height/2 - 4])
+    addChildz(@gameOverLabel, 50) # questionable: [self addChild:gameOverLabel z:50]
+
+    # Add a second Game Over text, as a simple drop shadow
+    @gameOverLabelShadow = CCLabelTTF:labelWithString:fontName:fontSize('Game Over', 'Marker Felt', 60)
+    @gameOverLabelShadow.setPosition([size.width/2 - 4, size.height/2 - 4])
+    addChildz(@gameOverLabelShadow, 49) # questionable: [self addChild:gameOverLabel z:49]
+
+    nil
+  end
 
 #pragma mark Touch Handlers
 def ccTouchBegan(touch, event)
