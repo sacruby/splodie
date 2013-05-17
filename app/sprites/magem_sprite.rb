@@ -83,8 +83,7 @@ class MagemSprite < Joybox::Core::Sprite
     # We call to the gameLayer itself to make sure we 
     # haven't left the gem a little off-base
     # (from the highlightGem movements)
-    #@gameLayer.performSelector:@selector(resetGemPosition:)
-    #                withObject:self];
+    @gameLayer.performSelector("resetGemPosition", withObject:self)
   end
 
 
