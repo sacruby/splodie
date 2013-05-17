@@ -21,11 +21,11 @@ class PlayfieldLayer < Joybox::Core::Layer
   # pragma mark Timer & Game Over
 
   def generateTimerDisplay
-    @timerFrame = CCSprite.spriteWithFile('timer.png')
+    @timerFrame = CCSprite:spriteWithFile('timer.png')
     @timerFrame.setPosition(@timerPosition)
 
     # Create a sprite for the timer
-    @timerSprite = CCSprite.spriteWithFile('timer_back.png')
+    @timerSprite = CCSprite:spriteWithFile('timer_back.png')
 
     # Add the timer itself
     @timerDisplay = CCProgressTimer:progressWithSprite(@timerSprite)
