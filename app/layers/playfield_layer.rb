@@ -28,7 +28,7 @@ class PlayfieldLayer < Joybox::Core::Layer
     @timerSprite = CCSprite.spriteWithFile('timer_back.png')
 
     # Add the timer itself
-    @timerDisplay = CCProgressTimer.progressWithSprite(timerSprite)
+    @timerDisplay = CCProgressTimer:progressWithSprite(@timerSprite)
     @timerDisplay.setPosition(@timerPosition)
     @timerDisplay.setType(KCCProgressTimerTypeRadial)
     addChildz(@timerDisplay, 4) # questionable: [self addChild:timerDisplay z:4]
