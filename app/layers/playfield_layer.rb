@@ -14,7 +14,6 @@ class PlayfieldLayer < Joybox::Core::Layer
     test_gem = MagemSprite.new file_name: 'source_images/gem1.png', position: [140, 140]
     self << test_gem
 
-
   end
 
   def on_exit
@@ -24,14 +23,13 @@ class PlayfieldLayer < Joybox::Core::Layer
   # pragma mark Timer & Game Over
 
   def generateTimerDisplay
-    @timerFrame = CCSprite:spriteWithFile('timer.png')
-    @timerFrame.setPosition(@timerPosition)
-
+    timerFrame = Sprite.new file_name: 'timer.png', position: [10, 300]
+    self << timerFrame
     # Create a sprite for the timer
-    @timerSprite = CCSprite:spriteWithFile('timer_back.png')
+    @timerSprite = Sprite.new file_name: 'timer_back.png'
 
     # Add the timer itself
-    @timerDisplay = CCProgressTimer:progressWithSprite(@timerSprite)
+    @timerDisplay = ProgressTimer.progressWithSprite(@timerSprite)
     @timerDisplay.setPosition(@timerPosition)
     @timerDisplay.setType(KCCProgressTimerTypeRadial)
     addChildz(@timerDisplay, 4) # questionable: [self addChild:timerDisplay z:4]
@@ -47,19 +45,21 @@ class PlayfieldLayer < Joybox::Core::Layer
     # If we are full, take it back to maximum
     if @currentTimerValue > @startingTimeValue
       @currentTimerValue = @startingTimeValue
-
+    end
+    
     nil
   end
 
   def gameOver
-    # Add a basic Game Over text
-    @gameOverLabel = CCLabelTTF:labelWithString:fontName:fontSize('Game Over', 'Marker Felt', 60)
-    @gameOverLabel.setPosition([size.width/2 - 4, size.height/2 - 4])
+    # Add a basic Game Over text Screen.half_width, Screen.half_height
+    @gameOverLabel = Label.new(text: 'Game Over', font_name: 'Marker Felt', font_size: 60)
+    @gameOverLabel.setPosition([Screen.half_width - 4, Screen.half_height - 4])
+    
     addChildz(@gameOverLabel, 50) # questionable: [self addChild:gameOverLabel z:50]
 
     # Add a second Game Over text, as a simple drop shadow
-    @gameOverLabelShadow = CCLabelTTF:labelWithString:fontName:fontSize('Game Over', 'Marker Felt', 60)
-    @gameOverLabelShadow.setPosition([size.width/2 - 4, size.height/2 - 4])
+    @gameOverLabelShadow = Label.new(text: 'Game Over', font_name: 'Marker Felt', font_size: 60)
+    @gameOverLabelShadow.setPosition([Screen.half_width - 4, Screen.half_height - 4])
     addChildz(@gameOverLabelShadow, 49) # questionable: [self addChild:gameOverLabel z:49]
 
     nil
